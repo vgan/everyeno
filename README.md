@@ -1,10 +1,11 @@
 everyeno
 ========
 everyeno is a bot designed to run on a schedule and tweet/ tumbl details of master releases for brian eno in chronological order. </br>
-you can see results here:
-    http://twitter.com/everyeno
-    http://everyeno.tumblr.com
-
+you can see results here:</br>
+<ul>
+   <li>http://twitter.com/everyeno</li>
+   <li> http://everyeno.tumblr.com</li>
+</ul>
 i thought this would be a fun way to learn to use the discogs API and visualize how much interesting work brian eno has been involved with over the years as an artist and producer. </br>
 <b>Operation:</b> </br>
 <ul>
