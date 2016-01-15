@@ -83,10 +83,6 @@ if os.path.isfile(releasesfilepath): # releases.csv file exists - do some stuff
                        		except:
                                 	thumbobj = 'nope'
                                 	
-				except:
-					print now + ' google search failed.'
-					video_url = 'nope'
-
 				if len(title) >= 48:  # truncate title to first 48 characters + elipses (this is the space leftover from image + 2 URLs, emoji, etc..)
 					short_title = title[:48] + "..." 
 				else:
