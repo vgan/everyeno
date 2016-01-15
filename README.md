@@ -17,7 +17,6 @@ i thought this would be a fun way to learn to use the discogs API and visualize 
   - Discogs https://github.com/discogs/discogs_client
   - Twitter (tweepy) https://github.com/tweepy/tweepy
   - Tumblr (pytumblr) https://github.com/tumblr/pytumblr
-  - Google Custom Search Engine (cse) https://developers.google.com/custom-search/json-api/v1/reference/cse/list
 </br>
 
 <b>Scheduling via Cron:</b> </br>
