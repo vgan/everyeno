@@ -7,16 +7,14 @@ import discogs_client
 import tweepy
 import urllib
 import mmap
-from apiclient.discovery import build
 import pytumblr
 from everyeno_keys import *
 
 client = pytumblr.TumblrRestClient(tumblr_consumer_key, tumblr_consumer_secret, tumblr_token_key, tumblr_token_secret)
-service = build("customsearch", "v1",developerKey=google_developerKey)
 auth = tweepy.OAuthHandler(twitter_consumer_key, twitter_consumer_secret)
 auth.set_access_token(twitter_token_key, twitter_token_secret)
 api = tweepy.API(auth)
-discogs = discogs_client.Client('EveryEno/0.2', user_token=discogs_user_token)
+discogs = discogs_client.Client('EveryEno/0.3', user_token=discogs_user_token)
 
 results = discogs.search('Brian Eno',type='master') # This search will return all master releases 
 
@@ -76,6 +74,7 @@ if os.path.isfile(releasesfilepath): # releases.csv file exists - do some stuff
 			year = str(release[0])
 			title = str(release[1])
 			discogs_url = release[2]
+			video_url = release[4]
 			if m.find(discogs_url) == -1: # master url has not been tweeted yet
 				try: # download thumbnail
                                 	thumb = release[3]
@@ -83,19 +82,7 @@ if os.path.isfile(releasesfilepath): # releases.csv file exists - do some stuff
                                 	thumbobj = open(thumbfile)
                        		except:
                                 	thumbobj = 'nope'
-				try:
-					res = service.cse().list( # google the title for first result on youtube
-        	        			q=str(title),
-        	        			cx="018071961790225090184:6k5fcoxbomq", # my custom search limited to youtube.com/watch* - set up your own here: http://www.google.com/cse/manage/all 
-        	        			num=1,
-        	        			start=1,
-        				).execute()
-
-        				if not 'items' in res:
-						video_url = 'nope' # no results, set to empty string
-        				else:
-                				for item in res['items']:
-                        				video_url = format(item['link'])
+                                	
 				except:
 					print now + ' google search failed.'
 					video_url = 'nope'
@@ -137,7 +124,11 @@ else: # no releases.csv file - lets make one
 			print now + ' error getting year'
 			year = "0"
 		thumb = result.data['thumb']
-		releasesfile.write(year + ',' + title + ',' + URL + ',' + thumb + '\n')
+                try:
+                        video_url = result.videos[0].data['uri']
+                except:
+                        video_url = 'nope'		
+		releasesfile.write(year + ',' + title + ',' + URL + ',' + thumb + ',' + video_url + '\n')
 	 	time.sleep(1)	
 	releasesfile.close()
 	print now + ' releases.csv has been created. you should manually clean it up / sort it before running again - i was missing lots of years for releases in my case...'
